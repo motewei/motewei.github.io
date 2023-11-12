@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Posts | Motewei</title>
+    <link>https://motewei.github.io/post/</link>
+      <atom:link href="https://motewei.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <description>Posts</description>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Sat, 11 Nov 2023 10:00:00 +0000</lastBuildDate>
+    <image>
+      <url>https://motewei.github.io/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_3.png</url>
+      <title>Posts</title>
+      <link>https://motewei.github.io/post/</link>
+    </image>
+    
+    <item>
+      <title>K近邻法</title>
+      <link>https://motewei.github.io/post/myblog/k-nn/</link>
+      <pubDate>Sat, 11 Nov 2023 10:00:00 +0000</pubDate>
+      <guid>https://motewei.github.io/post/myblog/k-nn/</guid>
+      <description>&lt;hr&gt;
+&lt;h2 id=&#34;1-k-近邻法是什么&#34;&gt;1. $k$ 近邻法是什么？&lt;/h2&gt;
+&lt;p&gt;$k$ 近邻法（$k$-nearest neighbor, $k$-NN）是一种基本且简单的分类和回归方法。&lt;br&gt;
+$k$ 近邻法简单直观来说：给定一个训练数据集，对于新的输入实例，在训练数据集重找到与该实例最接近的 $k$ 个实例，这 $k$ 个实例的多数属于哪个类，就把该输入实例分入这个类。&lt;br&gt;
+$k$ 近邻法有三个基本要素：$k$ 值的选择，距离度量和分类决策规则。&lt;/p&gt;
+&lt;h2 id=&#34;2-三个基本要素&#34;&gt;2. 三个基本要素&lt;/h2&gt;
+&lt;h3 id=&#34;21-k-值的选择&#34;&gt;2.1. $k$ 值的选择&lt;/h3&gt;
+&lt;p&gt;$k$ 的选择会有重大影响，较小则整体模型变复杂，对噪声会非常敏感，容易过拟合；较大则模型变简单，预测误差会增大。&lt;/p&gt;
+&lt;h3 id=&#34;22-距离度量&#34;&gt;2.2. 距离度量&lt;/h3&gt;
+&lt;p&gt;要找到 $k$ 个实例，就要指定一个范围。定义：
+$$
+L_p(x_i,x_j)=(\sum_{l=1}^{n}|x_i^{(l)}-x_j^{(l)}|^p)^{\frac{1}{p}}
+$$&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;其中 $p \geq 1$&lt;/li&gt;
+&lt;li&gt;当 $p=2$ 称为欧氏距离（Euclidean distance）&lt;/li&gt;
+&lt;li&gt;当 $p=1$ 称为曼哈顿距离（Manhattan distance）&lt;/li&gt;
+&lt;li&gt;当 $p=\infty$ 是各个坐标距离的最大值&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;23-分类决策规则&#34;&gt;2.3. 分类决策规则&lt;/h3&gt;
+&lt;p&gt;一般是选择&lt;strong&gt;多数表决&lt;/strong&gt;，即为统计出现的不同类别的次数，选择出现次数最多的类别作为新数据点的分类。&lt;/p&gt;
+&lt;h2 id=&#34;3-k-近邻法的实现原理&#34;&gt;3. $k$ 近邻法的实现原理&lt;/h2&gt;
+&lt;p&gt;$k$ 近邻法的实现需要考虑如何快速搜索 $k$ 个最近邻点。$kd$ 树是一种便于对 $k$ 维空间的数据进行快速检索的数据结构。 $kd$ 树是一种二叉树，表示对 $k$ 维空间的一个划分，其每个节点对应于 $k$ 维空间划分重的一个超矩形区域。利用 $kd$ 树可以省区对大部分数据的搜索，减少计算量&lt;/p&gt;
+&lt;p&gt;下面是kd树的基本思想和构建过程：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;构建kd树&lt;/strong&gt;：kd树的构建是一个递归过程，它选择一个轴（通常是特征空间的一个维度），然后选择该轴上的一个中位数作为分割点，将数据集分成两个子集。左子树包含小于中位数的数据，右子树包含大于中位数的数据。然后递归地构建左子树和右子树，每个子树选择下一个轴和中位数。这个过程一直进行，直到每个子树中包含一个数据点或没有数据点。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;kd树的平衡性&lt;/strong&gt;：构建kd树时，通常要确保树保持平衡，以获得最佳查询性能。平衡性意味着每个节点都有大致相等数量的左右子树节点&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;查询kd树&lt;/strong&gt;：一旦kd树构建完成，可以使用它来执行k-NN查询或范围查询。对于k-NN查询，从根节点开始，沿着树的分支向下遍历，根据查询点与分割超平面的距离来选择向左子树或右子树移动。这个过程一直进行，直到找到k个最近邻或遍历完整个树。对于范围查询，可以确定是否需要搜索每个子树，从而过滤掉一些不必要的子树。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;4-代码实现&#34;&gt;4. 代码实现&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;距离度量&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;def distance(a, b):
+	return np.sqrt(np.sum(np.square(a - b)))
+&lt;/code&gt;&lt;/pre&gt;
+&lt;ul&gt;
+&lt;li&gt;KNN 算法&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;class KNN:
+	# 初始化
+	def __init__(self, k, label_num):
+		self.k = k
+		self.label_num = label_num # 类别的数量
+	
+	# 保存训练数据
+	def fit(self, x_train, y_train):
+		self.x_train = x_train
+		self.y_train = y_train
+	
+	# 获取距离目标样本点最近的K个样本点的标签 
+	def get_knn_indices(self, x): 
+		# 计算已知样本的距离 
+		dis = list(map(lambda a: distance(a, x), self.x_train)) 
+		# 按距离从小到大排序，并得到对应的下标 
+		knn_indices = np.argsort(dis) 
+		# 取最近的K个 
+		knn_indices = knn_indices[:self.k] 
+		return knn_indices
+
+	# 观测K个近邻并使用np.argmax获取其中数量最多的类别
+	def get_lable(self, x):
+		# 获取选择的K个样本点
+		knn_indices self.get_knn_indices(x)
+		# 类别计数
+		label_statistic = np.zeros(shape=[self.;label_num])
+		for index in knn_indices:
+			label = int(self.y_train[index])
+			label_statistic[label] += 1
+		# 返回数量最多的类别
+		return np.argmax(lable_statistic)
+	
+	# 预测样本 test_x 的类别
+	def predict(self, x_test):
+			predicted_test_labels = np.zeros(shape=[len(x_test)], dtype=int)
+		for i, x in enumerate(x_test):
+			predict_test_labels[i] = self.get_label(x)
+		return predicted_test_labels
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;sklearn中可以通过引用库来实现：&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;from sklearn.neighbors import KNeighborsClassifier
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&#34;5-实践&#34;&gt;5. 实践&lt;/h2&gt;
+&lt;p&gt;《动手学机器学习》给出了 $k$ 近邻法的实践应用的例子
+
+&lt;a href=&#34;https://github.com/boyu-ai/Hands-on-ML/blob/master/%E7%AC%AC3%E7%AB%A0%20k%E8%BF%91%E9%82%BB%E7%AE%97%E6%B3%95/03%20k%E8%BF%91%E9%82%BB%E7%AE%97%E6%B3%95.ipynb&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;K 近邻法&lt;/a&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>
