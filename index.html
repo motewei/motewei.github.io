@@ -4,61 +4,117 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MoteWei</title>
+    <link rel="icon" href="images/logo.jpg" type="image/x-icon">
     <style>
         /* 设置全局字体、行高、背景色 */
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
+            font-family: 'Lato', Verdana, Helvetica, sans-serif;
+            line-height: 1.5;
             margin: 0;
-            padding: 20px;
-            background-color: #e0e0e0; /* 淡灰色背景提升对比度 */
+            padding: 0;
+            background-color: #fdfdfd; /* 统一背景色为淡灰色 */
+            color: #234;
+        }
+
+        /* 标题样式 */
+        h1, h2 {
+            color: #234; /* 深蓝色文本 */
+        }
+
+        /* 标题样式 */
+        h1 {
+            margin-bottom: 32px;
+            font-size: 2.6em;
+        }
+
+        h2 {
+            margin-top: 48px;
+        }
+
+        /* 主内容区域样式 */
+        .content-container {
+            max-width: 50vw; /* 调整内容区域宽度 */
+            padding: 16px;
+            margin: 48px auto;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        /* 段落样式 */
+        p {
+            margin: 15px 0;
+            color: #555; /* 中等灰色文本 */
+        }
+
+        /* 联系信息区域样式 */
+        .contact-info a {
+            color: #2471a3; /* 链接颜色 */
+            text-decoration: none;
+        }
+
+        .contact-info a:hover {
+            color: #f09228; /* 悬停时链接颜色 */
+            text-decoration: underline;
         }
 
         /* 头部样式 */
         header {
             text-align: center;
             padding: 30px;
-            background-color: #4CAF50; /* 柔和的绿色背景 */
+            background: linear-gradient(to bottom, #afd7e8 10%, #ffffff 90%); /* 渐变背景 */
             color: white;
         }
 
-        /* 主内容容器样式 */
-        .container {
-            max-width: 900px; /* 更宽的内容区域 */
-            margin: 30px auto;
-            background-color: white;
-            padding: 25px;
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* 较大的阴影 */
+        /* 分隔线样式 */
+        .hr {
+            width: 100%;
+            height: 1px;
+            margin: 48px 0;
+            background-color: #d6dbdf;
         }
 
-        /* 标题样式 */
-        h1, h2 {
-            color: #333; /* 深灰色文本 */
+        /* 响应式设计 */
+        @media only screen and (max-width: 1150px) {
+            .content-container {
+                max-width: 90vw; /* 适应较小的屏幕 */
+            }
+
+            header {
+                padding: 20px;
+            }
         }
 
-        /* 段落样式 */
-        p {
-            margin: 15px 0; /* 增加段落间距 */
-            color: #555; /* 中等灰色文本 */
+        @media only screen and (max-width: 1000px) {
+            .content-container {
+                margin-top: 30px;
+            }
+
+            .contact-info {
+                font-size: 18px;
+            }
         }
     </style>
 </head>
 <body>
     <!-- 网站头部 -->
     <header>
-        <h1>欢迎来到我的个人学术主页</h1>
+        <h1>我是Motewei，欢迎来到我的个人主页</h1>
     </header>
 
-    <!-- 主内容容器 -->
-    <div class="container">
+    <!-- 主内容区域 -->
+    <main class="content-container">
         <!-- 网站建设提示 -->
-        <h2>本主页正在搭建中...</h2>
-        <h2>This homepage is being built...</h2>
+        <section class="construction-notice">
+            <h2>本主页正在搭建中...</h2>
+            <h2>This homepage is being built...</h2>
+        </section>
 
         <!-- 联系信息 -->
-        <h2>联系我</h2>
-        <p>邮箱: <a href="mailto:weiqingwei_01@outlook.com">weiqingwei_01@outlook.com</a></p> <!-- 添加超链接到邮箱 -->
-    </div>
+        <section class="contact-info">
+            <h2>联系我</h2>
+            <p>邮箱: <a href="mailto:weiqingwei_01@outlook.com">weiqingwei_01@outlook.com</a></p>
+        </section>
+    </main>
 </body>
 </html>
