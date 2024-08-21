@@ -6,92 +6,127 @@
     <title>MoteWei</title>
     <link rel="icon" href="images/logo.jpg" type="image/x-icon">
     <style>
-        /* 设置全局字体、行高、背景色 */
+        /* 全局样式 */
         body {
-            font-family: 'Lato', Verdana, Helvetica, sans-serif;
-            line-height: 1.5;
+            font-family: 'Georgia', Verdana, Helvetica, sans-serif;
+            line-height: 1.6;
             margin: 0;
             padding: 0;
-            background-color: #fdfdfd; /* 统一背景色为淡灰色 */
+            background-color: #fdfdfd;
             color: #234;
-        }
-
-        /* 标题样式 */
-        h1, h2 {
-            color: #234; /* 深蓝色文本 */
-        }
-
-        /* 标题样式 */
-        h1 {
-            margin-bottom: 32px;
-            font-size: 2.6em;
-        }
-
-        h2 {
-            margin-top: 48px;
-        }
-
-        /* 主内容区域样式 */
-        .content-container {
-            max-width: 50vw; /* 调整内容区域宽度 */
-            padding: 16px;
-            margin: 48px auto;
-            background-color: white;
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-        }
-
-        /* 段落样式 */
-        p {
-            margin: 15px 0;
-            color: #555; /* 中等灰色文本 */
-        }
-
-        /* 联系信息区域样式 */
-        .contact-info a {
-            color: #2471a3; /* 链接颜色 */
-            text-decoration: none;
-        }
-
-        .contact-info a:hover {
-            color: #f09228; /* 悬停时链接颜色 */
-            text-decoration: underline;
         }
 
         /* 头部样式 */
         header {
             text-align: center;
-            padding: 30px;
-            background: linear-gradient(to bottom, #afd7e8 10%, #ffffff 90%); /* 渐变背景 */
+            padding: 50px 20px;
+            background: linear-gradient(to bottom, #afd7e8 10%, #ffffff 90%);
             color: white;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.5em;
+            font-weight: 700;
+            color: #234; /* 保持文字颜色一致 */
+        }
+
+        /* 导航菜单样式 */
+        nav {
+            background-color: #234;
+            padding: 10px;
+            text-align: center;
+        }
+
+        nav a {
+            color: white;
+            margin: 0 15px;
+            font-size: 1.2em;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        /* 主内容区域样式 */
+        .content-container {
+            max-width: 60vw;
+            padding: 40px 20px;
+            margin: 30px auto;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
         }
 
         /* 分隔线样式 */
         .hr {
             width: 100%;
             height: 1px;
-            margin: 48px 0;
+            margin: 30px 0;
             background-color: #d6dbdf;
+        }
+
+        /* 段落和标题样式 */
+        h2 {
+            font-size: 2em;
+            color: #234;
+            margin-bottom: 20px;
+        }
+
+        p {
+            margin: 15px 0;
+            color: #555;
+            font-size: 1.1em;
+        }
+
+        /* 头像样式 */
+        .profile-pic {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 20px;
+        }
+
+        /* 项目列表样式 */
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        ul li {
+            margin: 15px 0;
+            font-size: 1.1em;
+        }
+
+        ul li a {
+            color: #2471a3;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        ul li a:hover {
+            color: #f09228;
         }
 
         /* 响应式设计 */
         @media only screen and (max-width: 1150px) {
             .content-container {
-                max-width: 90vw; /* 适应较小的屏幕 */
+                max-width: 90vw;
             }
 
             header {
-                padding: 20px;
-            }
-        }
-
-        @media only screen and (max-width: 1000px) {
-            .content-container {
-                margin-top: 30px;
+                padding: 30px 20px;
             }
 
-            .contact-info {
-                font-size: 18px;
+            nav a {
+                font-size: 1em;
+            }
+
+            h2 {
+                font-size: 1.8em;
             }
         }
     </style>
@@ -99,22 +134,59 @@
 <body>
     <!-- 网站头部 -->
     <header>
-        <h1>我是Motewei，欢迎来到我的个人主页</h1>
+        <h1>Hi 👋! I'm Qingwei Wei</h1>
     </header>
+
+    <!-- 导航菜单 -->
+    <nav>
+        <a href="#about">About Me</a>
+        <a href="#projects">Projects</a>
+        <a href="#contact">Contact</a>
+    </nav>
 
     <!-- 主内容区域 -->
     <main class="content-container">
-        <!-- 网站建设提示 -->
-        <section class="construction-notice">
-            <h2>本主页正在搭建中...</h2>
-            <h2>This homepage is being built...</h2>
+        <!-- 关于我 -->
+        <section id="about">
+            <img src="images/logo.jpg" alt="MoteWei's Profile Picture" class="profile-pic">
+            <h2>About Me</h2>
+            <p>I am a third-year undergraduate student majoring in Intelligent Science and Technology.</p>
+            <p>My research interests include Robotics, Reinforcement Learning, and Computer Vision. I am passionate about advancing the development of intelligent, general-purpose, and safe robots that can function like humans.</p>
+            <p>I am an active participant in activities organized by Datawhale, an open-source learning community focused on artificial intelligence.</p>
+            <p><strong>I am looking for research opportunities, and I am eager to do influential and meaningful work. If you are willing to help me contact me at any time.</strong></p>
         </section>
 
+        <div class="hr"></div>
+
+        <!-- 项目展示 -->
+        <section id="projects">
+            <h2>Projects</h2>
+            <ul>
+                <li><p><strong>Project 1:</strong> Hands-on-ML-solutions <a href="https://github.com/motewei/Hands-on-ML-solutions">[Link]</a></p></li>
+                <li><p><strong>Project 2:</strong> Cyberpunk style image generation transfer based on CycleGAN <a href="https://github.com/motewei/CyberGAN">[Link]</a></p></li>
+                <!-- 可以根据需要添加更多项目 -->
+            </ul>
+        </section>
+
+        <div class="hr"></div>
+
         <!-- 联系信息 -->
-        <section class="contact-info">
-            <h2>联系我</h2>
-            <p>邮箱: <a href="mailto:weiqingwei_01@outlook.com">weiqingwei_01@outlook.com</a></p>
+        <section id="contact" class="contact-info">
+            <h2>Contact</h2>
+            <p>Email: <a href="mailto:weiqingwei_01@outlook.com">weiqingwei_01@outlook.com</a></p>
         </section>
     </main>
+
+    <!-- Google Analytics 代码 -->
+    <script type="text/javascript">
+    var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+    document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+    <script type="text/javascript">
+    try {
+        var pageTracker = _gat._getTracker("G-MJBTWLZLH2");
+        pageTracker._trackPageview();
+    } catch(err) {}
+    </script>
 </body>
 </html>
