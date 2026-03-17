@@ -3,212 +3,427 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MoteWei</title>
+    <title>Qingwei Wei | Portfolio</title>
     <link rel="icon" href="images/logo.jpg" type="image/x-icon">
     <style>
-        /* 全局样式 */
+        /* 全局基础样式 - 基于 Adwaita (GNOME) 现代扁平化配色 */
+        :root {
+            --bg-color: #f6f5f4; /* GNOME 背景色 */
+            --text-main: #2e3436; /* GNOME 深灰色字体 */
+            --text-muted: #5e6c70; /* 次要字体色 */
+            --accent-blue: #3584e4; /* GNOME 标准蓝色 */
+            --accent-yellow: #f6d32d; /* 标准黄色 */
+            --term-border: #cdc7c2; /* 边框色 */
+            --term-bg: #ffffff;
+            --term-header: #e0e0e0; /* GNOME 顶栏色 */
+            --tag-bg-blue: #cfe2f3; /* 扁平化标签蓝 */
+            --tag-text-blue: #0b5394;
+            --tag-bg-green: #d9ead3;
+            --tag-text-green: #38761d;
+            --tag-bg-orange: #fce5cd;
+            --tag-text-orange: #b45f06;
+        }
+
         body {
-            font-family: 'Georgia', Verdana, Helvetica, sans-serif;
-            line-height: 1.6;
+            font-family: 'Fira Code', 'JetBrains Mono', 'Consolas', 'Courier New', monospace;
             margin: 0;
             padding: 0;
-            background-color: #fdfdfd;
-            color: #234;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            line-height: 1.5;
         }
 
-        /* 头部样式 */
-        header {
-            text-align: center;
-            padding: 50px 20px;
-            background: linear-gradient(to bottom, #afd7e8 10%, #ffffff 90%);
-            color: white;
+        .container {
+            width: 90vw;
+            max-width: 1080px;
+            padding: 15px 0;
         }
 
-        header h1 {
+        /* 顶部介绍区 - 保持简洁命令行风格 */
+        .header-section {
+            margin-bottom: 25px;
+            padding: 0 5px;
+        }
+
+        .greeting {
+            font-size: 1.8em;
+            font-weight: bold;
+            margin: 0 0 8px 0;
+            color: var(--text-main);
+        }
+
+        .prompt-symbol {
+            color: var(--accent-yellow);
+            margin-right: 5px;
+        }
+
+        .highlight-name {
+            color: var(--accent-blue);
+        }
+
+        .sub-greeting {
+            font-size: 1.05em;
+            color: var(--text-muted);
+            margin: 0 0 15px 0;
+        }
+
+        .contact-bar {
+            display: flex;
+            gap: 15px;
+            font-size: 0.85em;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .contact-item {
+            color: var(--text-muted);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            transition: color 0.15s;
+        }
+
+        .contact-item:hover {
+            color: var(--accent-blue);
+        }
+
+        .contact-item svg {
+            width: 15px;
+            height: 15px;
+            fill: currentColor;
+        }
+
+        /* 中英文切换按钮 - 扁平化风格 */
+        .lang-btn {
+            background: transparent;
+            border: 1px dashed var(--text-muted);
+            color: var(--text-muted);
+            padding: 2px 8px;
+            border-radius: 2px; /* 减小圆角 */
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 0.85em;
+            transition: all 0.15s;
+        }
+        .lang-btn:hover {
+            border-color: var(--accent-blue);
+            color: var(--accent-blue);
+        }
+
+        /* 终端窗口区 - 重构为 Linux 扁平风格 */
+        .terminal-window {
+            background-color: var(--term-bg);
+            border: 1px solid var(--term-border);
+            border-radius: 6px; /* 扁平化小圆角 */
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05); /* 减弱阴影擬物感 */
+            overflow: hidden;
+        }
+
+        /* 终端顶栏 - 现代 GNOME 极简风格 */
+        .terminal-header {
+            background-color: var(--term-header);
+            border-bottom: 1px solid var(--term-border);
+            padding: 8px 15px;
+            display: flex;
+            align-items: center;
+            font-size: 0.8em;
+            color: var(--text-muted);
+            position: relative;
+        }
+
+        /* 删除 macOS 三色点，替换为 Linux 顶栏结构 */
+        .window-controls {
+            display: flex;
+            gap: 6px;
+            position: absolute;
+            right: 15px; /* 按钮放在右侧，Linux 习惯 */
+        }
+
+        /* Linux (GNOME) 现代扁平化关闭按钮样式 */
+        .dot-close {
+            width: 14px;
+            height: 14px;
+            background: transparent;
+            border: none;
+            cursor: default;
+            position: relative;
+            color: #cc0000; /* 深红色，用于悬停 */
+            opacity: 0.3; /* 默认半透明 */
+            transition: opacity 0.1s;
+        }
+
+        .terminal-window:hover .dot-close {
+            opacity: 0.8; /* 鼠标进入窗口区域时显现 */
+        }
+
+        .dot-close::before, .dot-close::after {
+            content: '';
+            position: absolute;
+            height: 14px;
+            width: 1.5px;
+            background-color: currentColor;
+            top: 0;
+            left: 6px;
+        }
+        .dot-close::before { transform: rotate(45deg); }
+        .dot-close::after { transform: rotate(-45deg); }
+
+        .terminal-title {
+            flex: 1;
+            text-align: center; /* 标题居中 */
+            font-weight: bold;
+        }
+        .terminal-title span { color: #8e24aa; } /* 微调代码高亮色 */
+
+        .terminal-status {
+            font-size: 0.85em;
+            position: absolute;
+            left: 15px; /* 状态放在左侧 */
+        }
+
+        /* 终端主体分栏列表 */
+        .terminal-body {
+            padding: 5px 0;
+        }
+
+        .t-row {
+            display: flex;
+            padding: 10px 15px;
+            border-bottom: 1px dashed var(--term-border);
+            align-items: flex-start;
+        }
+        .t-row:last-child {
+            border-bottom: none;
+        }
+        .t-row:hover {
+            background-color: #f8f9fa; /* GNOME 鼠标悬停色 */
+        }
+
+        .t-header {
+            background-color: var(--term-bg);
+            color: #9ca3af;
+            font-size: 0.7em;
+            font-weight: bold;
+            padding: 6px 15px;
+            border-bottom: 1px solid var(--term-border);
+            text-transform: uppercase;
+        }
+
+        /* 列宽控制 */
+        .col-cat { width: 15%; flex-shrink: 0; }
+        .col-dump { width: 73%; padding-right: 15px; }
+        .col-link { width: 12%; text-align: right; flex-shrink: 0; }
+
+        /* 标签样式 - 扁平化，减小圆角 */
+        .tag {
+            display: inline-block;
+            padding: 2px 6px;
+            border-radius: 2px;
+            font-size: 0.7em;
+            font-weight: bold;
+        }
+        .tag.blue { background-color: var(--tag-bg-blue); color: var(--tag-text-blue); }
+        .tag.green { background-color: var(--tag-bg-green); color: var(--tag-text-green); }
+        .tag.orange { background-color: var(--tag-bg-orange); color: var(--tag-text-orange); }
+
+        /* 文本内容样式 */
+        .dump-title {
+            font-weight: bold;
+            color: var(--text-main);
+            margin: 0 0 3px 0;
+            font-size: 0.95em;
+        }
+        .dump-desc {
             margin: 0;
-            font-size: 2.5em;
-            font-weight: 700;
-            color: #234; /* 保持文字颜色一致 */
+            font-size: 0.85em;
+            color: var(--text-muted);
+            line-height: 1.4;
+        }
+        
+        strong { color: var(--accent-blue); font-weight: bold; }
+
+        /* 链接样式 - 优化为极简命令行链接风格 */
+        .link-icon {
+            color: var(--accent-blue);
+            text-decoration: underline; /* 默认下划线 */
+            text-underline-offset: 3px;
+            font-size: 0.85em;
+        }
+        .link-icon:hover {
+            color: #f09228; /* 橙色高亮 */
         }
 
-        /* 导航菜单样式 */
-        nav {
-            background-color: #234;
-            padding: 10px;
-            text-align: center;
+        /* 终端底栏 */
+        .terminal-footer {
+            background-color: var(--term-header);
+            border-top: 1px solid var(--term-border);
+            padding: 6px 15px;
+            font-size: 0.8em;
+            color: var(--text-muted);
         }
-
-        nav a {
-            color: white;
-            margin: 0 15px;
-            font-size: 1.2em;
-            text-decoration: none;
-            transition: color 0.3s;
+        .blink-cursor {
+            display: inline-block;
+            width: 7px;
+            height: 1em;
+            background-color: var(--text-muted);
+            vertical-align: middle;
+            animation: blink 1s step-end infinite;
         }
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
 
-        nav a:hover {
-            text-decoration: underline;
-        }
+        /* 中英文切换逻辑 */
+        .zh { display: none; }
+        .en { display: block; }
+        span.en { display: inline; }
+        span.zh { display: none; }
 
-        /* 主内容区域样式 */
-        .content-container {
-            max-width: 60vw;
-            padding: 40px 20px;
-            margin: 30px auto;
-            background-color: white;
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-        }
+        body.zh-active .en { display: none; }
+        body.zh-active .zh { display: block; }
+        body.zh-active span.en { display: none; }
+        body.zh-active span.zh { display: inline; }
 
-        /* 分隔线样式 */
-        .hr {
-            width: 100%;
-            height: 1px;
-            margin: 30px 0;
-            background-color: #d6dbdf;
-        }
-
-        /* 段落和标题样式 */
-        h2 {
-            font-size: 2em;
-            color: #234;
-            margin-bottom: 20px;
-        }
-
-        p {
-            margin: 15px 0;
-            color: #555;
-            font-size: 1.1em;
-        }
-
-        /* 头像样式 */
-        .profile-pic {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            object-fit: cover;
-            margin-bottom: 20px;
-            display: block;  /* 新增 */
-            margin-left: auto;  /* 新增 */
-            margin-right: auto; /* 新增 */
-        }
-
-
-        /* 项目列表样式 */
-        ul {
-            list-style-type: none;
-            padding: 0;
-        }
-
-        ul li {
-            margin: 15px 0;
-            font-size: 1.1em;
-        }
-
-        ul li a {
-            color: #2471a3;
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-
-        ul li a:hover {
-            color: #f09228;
-        }
-
-        /* 响应式设计 */
-        @media only screen and (max-width: 1150px) {
-            .content-container {
-                max-width: 90vw;
-            }
-
-            header {
-                padding: 30px 20px;
-            }
-
-            nav a {
-                font-size: 1em;
-            }
-
-            h2 {
-                font-size: 1.8em;
-            }
+        /* 响应式适配移动端 */
+        @media (max-width: 800px) {
+            .t-row { flex-direction: column; gap: 8px; padding: 10px; }
+            .col-cat, .col-dump, .col-link { width: 100%; text-align: left; }
+            .col-dump { padding-right: 0; }
         }
     </style>
 </head>
 <body>
-    <!-- 网站头部 -->
-    <header>
-        <h1>Hi 👋! I'm Qingwei Wei</h1>
-    </header>
 
-    <!-- 导航菜单 -->
-    <nav>
-        <a href="#about">About Me</a>
-        <a href="#projects">Projects</a>
-        <a href="#contact">Contact</a>
-    </nav>
-
-    <!-- 主内容区域 -->
-    <main class="content-container">
-        <!-- 关于我 -->
-        <section id="about">
-            <!-- <img src="images/image.png" alt="MoteWei's Profile Picture" class="profile-pic"> -->
-            <h2>About Me</h2>
-            <p>I am a undergraduate student majoring in Intelligent Science and Technology.</p>
-            <p>My interests include <strong>Robotics</strong>, <strong>Reinforcement Learning</strong>, and <strong>Computer Vision</strong>. <p>
-            <p>I hope to dedicate my future efforts to advancing the development of intelligent, general-purpose robots capable of working autonomously and safely, much like humans.</p>
-            <p>I am a member of the <a href="https://github.com/datawhalechina" target="_blank" rel="noopener noreferrer"><strong>Datawhale</strong></a>, an open-source learning community focused on artificial intelligence.</p>
-            <p><strong>Currently, I'm preparing for a significant exam related to my future, while also using this time to settle, reflect, and seek answers.</strong></p>
-        </section>
-
-        <div class="hr"></div>
-
-        <!-- 项目展示 -->
-        <section id="projects">
-            <h2>Projects</h2>
-            <ul>
-                <li>
-                    <p><strong>Hands-on-ML-solutions</strong> <a href="https://github.com/motewei/Hands-on-ML-solutions">[Link]</a>: Solutions to the exercises in the book <em>Hands-on Machine Learning</em> by Shanghai Jiao Tong University.</p>
-                </li>
-                <!-- 可以根据需要添加更多项目 -->
-            </ul>
-        </section>
-
-        <div class="hr"></div>
-
-        <!-- 联系信息 -->
-        <section id="contact" class="contact-info">
-            <h2>Contact</h2>
-            <p>Email: <a href="mailto:weiqingwei_01@outlook.com">weiqingwei_01@outlook.com</a></p>
-        </section>
-
-        <div class="hr"></div>
-
-        <!-- 其他信息 -->
-        <section id="sources-of-strength"> 
-            <h2>Sources of Strength</h2>
-            <p>
-                Idols: <strong><a href="https://tairanhe.com/" target="_blank" rel="noopener noreferrer">Tairan He</a></strong>  <strong><a href="https://people.csail.mit.edu/kaiming/" target="_blank" rel="noopener noreferrer">Kaiming He</a></strong>
+    <div class="container">
+        <div class="header-section">
+            <h1 class="greeting">
+                <span class="prompt-symbol">$</span> Hi there, I'm <span class="highlight-name">Qingwei Wei</span>
+            </h1>
+            <p class="sub-greeting">
+                <span class="prompt-symbol">$</span> 
+                <span class="en">An undergraduate majoring in Intelligent Science and Technology.</span>
+                <span class="zh">智能科学与技术专业，即将本科毕业。</span>
             </p>
-            <p>They continue to light my way, and I'm deeply grateful for the strength they've unknowingly provided.</p>
-        </section>
+            
+            <div class="contact-bar">
+                <a href="mailto:weiqingwei_01@outlook.com" class="contact-item">
+                    <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                    weiqingwei_01@outlook.com
+                </a>
+                <a href="https://github.com/motewei" target="_blank" class="contact-item">
+                    <svg viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+                    motewei
+                </a>
+                <button class="lang-btn" onclick="toggleLanguage()">
+                    <span class="en">CN / EN</span>
+                    <span class="zh">EN / CN</span>
+                </button>
+            </div>
+        </div>
 
+        <div class="terminal-window">
+            <div class="terminal-header">
+                <div class="terminal-status">
+                    🔵 [ research.agent ]
+                </div>
+                <div class="terminal-title">
+                    <span>const</span> qingwei = <span>new</span> Terminal('AI_CV_ROBOT')
+                </div>
+                <div class="window-controls">
+                    <div class="dot-close" title="Terminate Task"></div>
+                </div>
+            </div>
 
-        <!-- 底部信息 -->
-        <div class="hr"></div>
-        <p></p><strong>This personal homepage is still being built.</strong></p>
-    </main>
+            <div class="t-row t-header">
+                <div class="col-cat">CAT</div>
+                <div class="col-dump">MEMORY.DUMP</div>
+                <div class="col-link">LINKS</div>
+            </div>
 
-    <!-- Google Analytics 代码 -->
-    <script type="text/javascript">
-    var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
-    document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
-    </script>
-    <script type="text/javascript">
-    try {
-        var pageTracker = _gat._getTracker("G-MJBTWLZLH2");
-        pageTracker._trackPageview();
-    } catch(err) {}
+            <div class="terminal-body">
+                
+                <div class="t-row">
+                    <div class="col-cat">
+                        <span class="tag blue">🧠 INTEREST</span>
+                    </div>
+                    <div class="col-dump">
+                        <p class="dump-title en">Intersection of Computer Vision and Robotics</p>
+                        <p class="dump-title zh">计算机视觉与机器人的交叉点</p>
+                        <p class="dump-desc en">I hope to contribute to the development of intelligent, general-purpose autonomous robots capable of understanding the underlying representations of our world.</p>
+                        <p class="dump-desc zh">希望能够推动打造理解世界背后的表征的智能的通用自主的机器人。</p>
+                    </div>
+                    <div class="col-link">-</div>
+                </div>
+
+                <div class="t-row">
+                    <div class="col-cat"><span class="tag orange">🔍 SEEKING</span></div>
+                    <div class="col-dump">
+                        <p class="dump-title en"><strong>Seeking Research Opportunities</strong></p>
+                        <p class="dump-title zh"><strong>正在积极寻找研究机会</strong></p>
+                        <p class="dump-desc en">Standing at a turning point, I am looking to further explore my passion for research and hopefully make some modest contributions.</p>
+                        <p class="dump-desc zh">站在人生的转折点，进一步探索我对研究的兴趣，并希望能够做出一些微小的贡献。</p>
+                    </div>
+                    <div class="col-link">-</div>
+                </div>
+
+                <div class="t-row">
+                    <div class="col-cat"><span class="tag green">🌐 COMMUNITY</span></div>
+                    <div class="col-dump">
+                        <p class="dump-title en">Member @ Datawhale</p>
+                        <p class="dump-title zh">成员 @ Datawhale</p>
+                        <p class="dump-desc en">An open-source learning community focused on AI. Striving to promote barrier-free access to technology and knowledge for everyone.</p>
+                        <p class="dump-desc zh">一个专注人工智能的开源学习社区，希望推动技术和知识无门槛地让所有人接触学习。</p>
+                    </div>
+                    <div class="col-link">
+                        <a href="https://github.com/datawhalechina" target="_blank" class="link-icon">datawhalechina</a>
+                    </div>
+                </div>
+
+                <div class="t-row">
+                    <div class="col-cat"><span class="tag blue">💻 PROJECT</span></div>
+                    <div class="col-dump">
+                        <p class="dump-title">Hands-on-ML-solutions</p>
+                        <p class="dump-desc en">Solutions to the exercises in the book <em>Hands-on Machine Learning</em> by Shanghai Jiao Tong University.</p>
+                        <p class="dump-desc zh">上海交通大学《动手学机器学习》课后作业的解答。</p>
+                    </div>
+                    <div class="col-link">
+                        <a href="https://github.com/motewei/Hands-on-ML-solutions" target="_blank" class="link-icon">GitHub</a>
+                    </div>
+                </div>
+
+                <div class="t-row">
+                    <div class="col-cat"><span class="tag orange">✨ IDOLS</span></div>
+                    <div class="col-dump">
+                        <p class="dump-title en">Sources of Strength</p>
+                        <p class="dump-title zh">力量源泉与致谢</p>
+                        <p class="dump-desc en">Grateful for the strength unknowingly provided by <strong>Tairan He</strong>, <strong>Kaiming He</strong>, and <strong>Saining Xie</strong>.</p>
+                        <p class="dump-desc zh">不断照亮我前行的路，深深感激 <strong>Tairan He</strong>、<strong>Kaiming He</strong> 和 <strong>Saining Xie</strong> 无意间赋予我的力量。</p>
+                    </div>
+                    <div class="col-link">-</div>
+                </div>
+
+            </div>
+
+            <div class="terminal-footer">
+                > get ./brain -t core.memory <span class="blink-cursor"></span>
+            </div>
+        </div>
+    </div>
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-MJBTWLZLH2"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-MJBTWLZLH2');
+
+      // 中英文切换逻辑
+      function toggleLanguage() {
+          document.body.classList.toggle('zh-active');
+      }
     </script>
 </body>
 </html>
